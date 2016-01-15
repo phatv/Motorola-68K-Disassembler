@@ -1,0 +1,979 @@
+00007000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.15.04
+Created On: 12/5/2015 7:03:37 PM
+
+00000000                             1  *--------------------------------------------------------------------
+00000000                             2  * Title      : Combined Test Program for 68k Disassembler
+00000000                             3  * Written by : Arthur Bulan, Phat Tran, & Felicia Passovoy
+00000000                             4  * Date       : Nov/Dec 2015
+00000000                             5  * Description: Tests all required opcodes using various registers
+00000000                             6  *--------------------------------------------------------------------    
+00000000                             7        
+00000000                             8  **********************************************************************
+00000000  =00004000                  9  addr1     EQU     $4000        
+00000000                            10  
+00000000  =00004001                 11  addr2     EQU     $4001 
+00000000                            12  
+00000000  =000000C0                 13  data1     EQU     $C0
+00000000                            14  
+00000000  =0000A7FF                 15  data2     EQU     $A7FF 
+00000000                            16  
+00000000  =00005555                 17  data3     EQU     $5555
+00000000                            18  
+00000000  =00000000                 19  data4     EQU     $0000 
+00000000                            20  
+00000000  =00001246                 21  data5     EQU     4678 
+00000000                            22  
+00000000  =0000004F                 23  data6     EQU     %01001111 
+00000000                            24  
+00000000  =00000017                 25  data7     EQU     %00010111 
+00000000                            26  
+00000000                            27  
+00000000                            28  
+00000000                            29  
+00000000                            30  **************************************************************************
+00000000                            31  
+00000000                            32  *
+00000000                            33  
+00000000                            34  * Beginning of code segment. This is the actual assembly lang instructions
+00000000                            35  
+00000000                            36  *
+00000000                            37  
+00000000                            38  **************************************************************************
+00000000                            39   
+00000000                            40  
+00007000                            41      ORG $7000          * This pseudo op code tells the assembler  here                                                                                                                         
+00007000                            42  START
+00007000                            43                                             * the program will run in memory
+00007000                            44  
+00007000  1806                      45          MOVE.B  D6,D4
+00007002  3846                      46          MOVEA.W D6,A4
+00007004  48E3 F5FA                 47          MOVEM.L a0-a4/a6/d0-d3/d5/d7,-(A3)
+00007008  CFC6                      48          MULS.W  D6,D7
+0000700A  85C3                      49          DIVS.W  D3,D2
+0000700C  4443                      50          NEG.W   D3
+0000700E  E76A                      51          LSL     D3,D2 
+00007010  E66A                      52          LSR     D3,D2 
+00007012  0702                      53          BTST    D3,D2 
+00007014  60EA                      54          BRA     START 
+00007016  4E75                      55          RTS
+00007018                            56           
+00007018                            57          
+00007018  3A0C                      58          MOVE.W  A4,D5
+0000701A  3A4C                      59          MOVEA.W A4,A5
+0000701C                            60         
+0000701C                            61         
+0000701C                            62         
+0000701C  1C13                      63          MOVE.B  (A3),D6
+0000701E  3C53                      64          MOVEA.W (A3),A6
+00007020  8DD3                      65          DIVS.W  (A3),D6   
+00007022  4453                      66          NEG.W   (A3)
+00007024  E3D3                      67          LSL     (A3)
+00007026  E2D3                      68          LSR     (A3)
+00007028  0713                      69          BTST    D3,(A3)
+0000702A  4E93                      70          JSR     (A3)
+0000702C                            71   
+0000702C  163C 0010                 72          MOVE.B  #16,D3  
+00007030  367C 0010                 73          MOVEA.W #16,A3  
+00007034  CBFC 04DD                 74          MULS.W  #1245,D5 
+00007038  89FC 0A4B                 75          DIVS.W  #2635, D4 
+0000703C                            76          
+0000703C                            77           
+0000703C  141C                      78          MOVE.B  (A4)+,D2
+0000703E  C5DC                      79          MULS.W  (A4)+,D2
+00007040  85DB                      80          DIVS.W  (A3)+,D2 
+00007042  445B                      81          NEG.W   (A3)+
+00007044  E3DB                      82          LSL     (A3)+
+00007046  E2DB                      83          LSR     (A3)+
+00007048  051B                      84          BTST    D2,(A3)+
+0000704A                            85          
+0000704A  1222                      86          MOVE.B  -(A2),D1
+0000704C  C3E2                      87          MULS.W  -(A2),D1
+0000704E  83E2                      88          DIVS.W  -(A2),D1
+00007050  4462                      89          NEG.W   -(A2)
+00007052  E3E2                      90          LSL     -(A2)
+00007054  E2E2                      91          LSR     -(A2)
+00007056  0322                      92          BTST    D1, -(A2)
+00007058                            93          
+00007058  1439 00004501             94          MOVE.B  $4501.L,D2
+0000705E  CBF9 00001245             95          MULS.W  $1245.L,D5
+00007064  8BF9 00001233             96          DIVS.W  $1233.L,D5
+0000706A  4479 00005641             97          NEG.W   $5641.L
+00007070  E3F9 00005641             98          LSL     $5641.L
+00007076  E2F9 00005641             99          LSR     $5641.L
+0000707C  0B39 00005454            100          BTST    D5, $5454.L 
+00007082  4EB9 00005454            101          JSR     $5454.L 
+00007088                           102          
+Line 103 WARNING: Forcing SHORT addressing disables range checking of extension word
+00007088  1438 4501                103          MOVE.B  $4501.W,D2
+Line 104 WARNING: Forcing SHORT addressing disables range checking of extension word
+0000708C  CBF8 1245                104          MULS.W  $1245.W,D5
+Line 105 WARNING: Forcing SHORT addressing disables range checking of extension word
+00007090  8BF8 7545                105          DIVS.W  $7545.W,D5
+Line 106 WARNING: Forcing SHORT addressing disables range checking of extension word
+00007094  4478 5641                106          NEG.W   $5641.W   
+Line 107 WARNING: Forcing SHORT addressing disables range checking of extension word
+00007098  E3F8 5641                107          LSL     $5641.W
+Line 108 WARNING: Forcing SHORT addressing disables range checking of extension word
+0000709C  E2F8 5641                108          LSR     $5641.W
+Line 109 WARNING: Forcing SHORT addressing disables range checking of extension word
+000070A0  0B38 5454                109          BTST    D5, $5454.W 
+Line 110 WARNING: Forcing SHORT addressing disables range checking of extension word
+000070A4  4EB8 5454                110          JSR     $5454.W 
+000070A8                           111  
+000070A8                           112  
+000070A8                           113  ************************************************************************
+000070A8                           114  ************************************************************************
+000070A8                           115  
+000070A8  303C A7FF                116          MOVE.W  #data2,D0     * Load D0 
+000070AC                           117  
+000070AC  123C 004F                118          MOVE.B  #data6,D1     * Load D1 
+000070B0                           119  
+000070B0  143C 0017                120          MOVE.B  #data7,D2     * load D2 
+000070B4                           121  
+000070B4  363C 5555                122          MOVE.W  #data3,D3     * load D3 
+000070B8                           123  
+000070B8  307C 4000                124          MOVEA.W #addr1,A0     * load address register 
+000070BC                           125  
+000070BC  327C 4000                126          MOVEA.W #addr1,A1   * not sure what this is
+000070C0                           127  
+000070C0                           128  
+000070C0                           129  
+000070C0                           130  ********************************** SUB *********************************
+000070C0                           131  * sub byte
+000070C0                           132  
+000070C0                           133  
+000070C0                           134  
+000070C0  0400 00C0                135          SUB.B   #data1,D0   * immediate data to D0 byye
+000070C4                           136  
+000070C4  9318                     137          SUB.B   D1,(A0)+    * sub post-increment to D1
+000070C6                           138  
+000070C6  9321                     139          SUB.B   D1,-(A1)    * sub pre-increment to D1
+000070C8                           140  
+000070C8  9338 4000                141          SUB.B   D1,$4000    * not sure what this does
+000070CC                           142  
+000070CC  9339 40010000            143          SUB.B   D1,$40010000    * not sure what this does
+000070D2                           144  
+000070D2                           145  
+000070D2                           146  
+000070D2  9001                     147          SUB.B   D1, D0      * sub D1 to D0
+000070D4                           148  
+000070D4                           149  
+000070D4  9010                     150          SUB.B   (A0),D0     * sub D0 to A0 indirect
+000070D6                           151  
+000070D6  9018                     152          SUB.B   (A0)+,D0    * sub post-increment
+000070D8                           153  
+000070D8  9021                     154          SUB.B   -(A1),D0    * sub pre-increment
+000070DA                           155  
+000070DA                           156  
+000070DA  9039 0000A7FF            157          SUB.B   data2,D0    * i think this passes? word
+000070E0                           158  
+000070E0  9038 5555                159          SUB.B   data3,D0    * longword?
+000070E4                           160  
+000070E4                           161  * sub word
+000070E4                           162  
+000070E4  0440 00C0                163          SUB.W   #data1,D0   * immediate data to D0 byte
+000070E8                           164  
+000070E8  0440 1021                165          SUB.W   #$1021,D0   * immediate data to D0 word
+000070EC                           166  
+000070EC  90C1                     167          SUB.W   D1,A0       * sub A0 to D1
+000070EE                           168  
+000070EE  9358                     169          SUB.W   D1,(A0)+    * sub post-increment to D1
+000070F0                           170  
+000070F0  9361                     171          SUB.W   D1,-(A1)    * sub pre-increment to D1
+000070F2                           172  
+000070F2  9378 4000                173          SUB.W   D1,$4000    * not sure what this does
+000070F6                           174  
+000070F6  9379 40010000            175          SUB.W   D1,$40010000    * not sure what this does
+000070FC                           176  
+000070FC                           177  
+000070FC                           178  
+000070FC  9041                     179          SUB.W   D1, D0      * sub D1 to D0
+000070FE                           180  
+000070FE  9048                     181          SUB.W   A0,D0       * sub D0 to A0 direct
+00007100                           182  
+00007100  9050                     183          SUB.W   (A0),D0     * sub D0 to A0 indirect
+00007102                           184  
+00007102  9058                     185          SUB.W   (A0)+,D0    * sub post-increment
+00007104                           186  
+00007104  9061                     187          SUB.W   -(A1),D0    * sub pre-increment
+00007106                           188  
+00007106                           189  
+00007106  9079 0000A7FF            190          SUB.W   data2,D0    * i think this passes? word
+0000710C                           191  
+0000710C  9078 5555                192          SUB.W   data3,D0    * longword?
+00007110                           193  
+00007110                           194  
+00007110                           195  * sub longword
+00007110                           196  
+00007110                           197  
+00007110  0480 000000C0            198          SUB.L   #data1,D0   * immediate data to D0 byte
+00007116                           199  
+00007116  0480 00001021            200          SUB.L   #$1021,D0   * immediate data to D0 word
+0000711C                           201  
+0000711C  0480 AAAA5555            202          SUB.L   #$AAAA5555,D0   * immediate data to D0 longword
+00007122                           203  
+00007122  91C1                     204          SUB.L   D1,A0       * sub A0 to D1
+00007124                           205  
+00007124  9398                     206          SUB.L   D1,(A0)+    * sub post-increment to D1
+00007126                           207  
+00007126  93A1                     208          SUB.L   D1,-(A1)    * sub pre-increment to D1
+00007128                           209  
+00007128  93B8 4000                210          SUB.L   D1,$4000    * not sure what this does
+0000712C                           211  
+0000712C  93B9 40010000            212          SUB.L   D1,$40010000    * not sure what this does
+00007132                           213  
+00007132                           214  
+00007132                           215  
+00007132  9081                     216          SUB.L   D1, D0      * sub D1 to D0
+00007134                           217  
+00007134  9088                     218          SUB.L   A0,D0       * sub D0 to A0 direct
+00007136                           219  
+00007136  9090                     220          SUB.L   (A0),D0     * sub D0 to A0 indirect
+00007138                           221  
+00007138  9098                     222          SUB.L   (A0)+,D0    * sub post-increment
+0000713A                           223  
+0000713A  90A1                     224          SUB.L   -(A1),D0    * sub pre-increment
+0000713C                           225  
+0000713C                           226  
+0000713C  90B9 0000A7FF            227          SUB.L   data2,D0    * i think this passes? word
+00007142                           228  
+00007142  90B8 5555                229          SUB.L   data3,D0    * longword?
+00007146                           230  
+00007146                           231  
+00007146                           232  ******************************* SUBA **************************************
+00007146                           233  * SUBA WORD
+00007146                           234  
+00007146  90C1                     235          SUBA.W D1,A0        * Data register to address register
+00007148                           236  
+00007148  90C8                     237          SUBA.W A0,A0        * address register to data register direct
+0000714A                           238  
+0000714A  90D0                     239          SUBA.W (A0),A0      * address register to data register indirect
+0000714C                           240  
+0000714C  90D8                     241          SUBA.W (A0)+,A0     * post-increment
+0000714E                           242  
+0000714E  90E1                     243          SUBA.W -(A1),A0     * pre-increment
+00007150                           244  
+00007150  90F8 4000                245          SUBA.W addr1,A0     * word address?
+00007154                           246  
+00007154  90FC 4000                247          SUBA.W #addr1,A0    * immediate address?
+00007158                           248  
+00007158  90F8 4000                249          SUBA.W $4000,A0     * random address
+0000715C                           250  
+0000715C  90F9 0000A7FF            251          SUBA.W data2,A0     * random data word
+00007162                           252  
+00007162  90FC A7FF                253          SUBA.W #data2,A0    * immediate data word
+00007166                           254  
+00007166  90FC AAAA                255          SUBA.W #$AAAA,A0    * immediate data word
+0000716A                           256  
+0000716A                           257  
+0000716A                           258  
+0000716A                           259  * SUBA LONGWORD
+0000716A                           260  
+0000716A  91C1                     261          SUBA.L D1,A0        * Data register to data register
+0000716C                           262  
+0000716C  91C8                     263          SUBA.L A0,A0        * address register to data register direct
+0000716E                           264  
+0000716E  91D0                     265          SUBA.L (A0),A0      * address register to data register indirect
+00007170                           266  
+00007170  91D8                     267          SUBA.L (A0)+,A0     * post-increment
+00007172                           268  
+00007172  91E1                     269          SUBA.L -(A1),A0     * pre-increment
+00007174                           270  
+00007174  91F8 4000                271          SUBA.L addr1,A0     * word address?
+00007178                           272  
+00007178  91FC 00004000            273          SUBA.L #addr1,A0    * immediate address?
+0000717E                           274  
+0000717E  91F8 4000                275          SUBA.L $4000,A0     * random address
+00007182                           276  
+00007182  91F9 0000A7FF            277          SUBA.L data2,A0     * random data word
+00007188                           278  
+00007188  91F8 5555                279          SUBA.L data3,A0     * random data longword
+0000718C                           280  
+0000718C  91FC 0000A7FF            281          SUBA.L #data2,A0    * immediate data word
+00007192                           282  
+00007192  91FC 00005555            283          SUBA.L #data3,A0    * immediate data longword
+00007198                           284  
+00007198  91FC 0000AAAA            285          SUBA.L #$AAAA,A0    * immediate data word
+0000719E                           286  
+0000719E  91FC AAAA5555            287          SUBA.L #$AAAA5555,A0    * immediate data longword
+000071A4                           288  
+000071A4                           289  
+000071A4                           290  ******************************* SUBI **************************************
+000071A4                           291  *SUBI byte
+000071A4                           292  
+000071A4  0400 00AA                293          SUBI.B #$AA,D0      * immediate data to D0
+000071A8                           294  
+000071A8  0410 00AA                295          SUBI.B #$AA,(A0)    * address register indirect
+000071AC                           296  
+000071AC  0418 00AA                297          SUBI.B #$AA,(A0)+   * address register post-increment
+000071B0                           298  
+000071B0  0421 00AA                299          SUBI.B #$AA,-(A1)   * address register pre-increment
+000071B4                           300  
+000071B4  0438 00AA 4000           301          SUBI.B #$AA,$4000   * destination word address
+000071BA                           302  
+000071BA  0438 00AA 4000           303          SUBI.B #$AA,$00004000   * destination longword address
+000071C0                           304  
+000071C0                           305  
+000071C0                           306  *SUBI word
+000071C0                           307  
+000071C0  0440 AA55                308          SUBI.W #$AA55,D0    * data register
+000071C4                           309  
+000071C4  0450 AA55                310          SUBI.W #$AA55,(A0)  * address register indirect
+000071C8                           311  
+000071C8  0458 AA55                312          SUBI.W #$AA55,(A0)+ * address register post-increment
+000071CC                           313  
+000071CC  0461 AA55                314          SUBI.W #$AA55,-(A1) * address register pre-increment
+000071D0                           315  
+000071D0  0478 AA55 4000           316          SUBI.W #$AA55,$4000 * destination word 
+000071D6                           317  
+000071D6  0478 AA55 4000           318          SUBI.W #$AA55,$00004000 * destination longword
+000071DC                           319  
+000071DC                           320  
+000071DC                           321  *SUBI longword
+000071DC                           322  
+000071DC  0480 00AA55FF            323          SUBI.L #$AA55FF,D0  * data register
+000071E2                           324  
+000071E2  0490 00AA55FF            325          SUBI.L #$AA55FF,(A0)    * address register indirect
+000071E8                           326  
+000071E8  0498 00AA55FF            327          SUBI.L #$AA55FF,(A0)+   * address register post-increment
+000071EE                           328  
+000071EE  04A1 00AA55FF            329          SUBI.L #$AA55FF,-(A1)   * address register pre-increment
+000071F4                           330  
+000071F4  04B8 00AA55FF 4000       331          SUBI.L #$AA55FF,$4000   * destination word
+000071FC                           332  
+000071FC  04B8 00AA55FF 4000       333          SUBI.L #$AA55FF,$00004000   * destination longword
+00007204                           334  
+00007204                           335  
+00007204                           336  ******************************* AND **************************************
+00007204                           337  *AND byte
+00007204                           338  
+00007204  C001                     339          AND.B D1,D0     * data register for source and destination
+00007206                           340  
+00007206  C010                     341          AND.B (A0),D0       * souce address register indirect
+00007208                           342  
+00007208  C018                     343          AND.B (A0)+,D0      * source address register post-increment
+0000720A                           344  
+0000720A  C021                     345          AND.B -(A1),D0      * source address register pre-decrement
+0000720C                           346  
+0000720C  C038 4000                347          AND.B $4000,D0      * source word address
+00007210                           348  
+00007210  C038 4000                349          AND.B $00004000,D0  * source longword address
+00007214                           350  
+00007214  C03C 00AE                351          AND.B #$AE,D0       * immediate data
+00007218                           352  
+00007218                           353  
+00007218  C310                     354          AND.B D1,(A0)       * dest address register indirect
+0000721A                           355  
+0000721A  C318                     356          AND.B D1,(A0)+      * dest address register post-increment
+0000721C                           357  
+0000721C  C321                     358          AND.B D1,-(A1)      * dest address register pre-decrement
+0000721E                           359  
+0000721E  C338 4000                360          AND.B D1,$4000      * dest word address
+00007222                           361  
+00007222  C338 4000                362          AND.B D1,$00004000  * dest longword address
+00007226                           363  
+00007226                           364  
+00007226                           365  *AND word
+00007226                           366  
+00007226  C041                     367          AND.W D1,D0     * data register for source and destination
+00007228                           368  
+00007228  C050                     369          AND.W (A0),D0       * souce address register indirect
+0000722A                           370  
+0000722A  C058                     371          AND.W (A0)+,D0      * source address register post-increment
+0000722C                           372  
+0000722C  C061                     373          AND.W -(A1),D0      * source address register pre-decrement
+0000722E                           374  
+0000722E  C078 4000                375          AND.W $4000,D0      * source word address
+00007232                           376  
+00007232  C078 4000                377          AND.W $00004000,D0  * source longword address
+00007236                           378  
+00007236  C07C 00AE                379          AND.W #$AE,D0       * immediate data byte
+0000723A                           380  
+0000723A  C07C AAAA                381          AND.W #$AAAA,D0     * immediate data word
+0000723E                           382  
+0000723E                           383  
+0000723E  C350                     384          AND.W D1,(A0)       * dest address register indirect
+00007240                           385  
+00007240  C358                     386          AND.W D1,(A0)+      * dest address register post-increment
+00007242                           387  
+00007242  C361                     388          AND.W D1,-(A1)      * dest address register pre-decrement
+00007244                           389  
+00007244  C378 4000                390          AND.W D1,$4000      * dest word address
+00007248                           391  
+00007248  C378 4000                392          AND.W D1,$00004000  * dest longword address
+0000724C                           393  
+0000724C                           394  
+0000724C                           395  *AND longword
+0000724C                           396  
+0000724C  C081                     397          AND.L D1,D0     * data register for source and destination
+0000724E                           398  
+0000724E  C090                     399          AND.L (A0),D0       * souce address register indirect
+00007250                           400  
+00007250  C098                     401          AND.L (A0)+,D0      * source address register post-increment
+00007252                           402  
+00007252  C0A1                     403          AND.L -(A1),D0      * source address register pre-decrement
+00007254                           404  
+00007254  C0B8 4000                405          AND.L $4000,D0      * source word address
+00007258                           406  
+00007258  C0B8 4000                407          AND.L $00004000,D0  * source longword address
+0000725C                           408  
+0000725C  C0BC 000000AE            409          AND.L #$AE,D0       * immediate data byte
+00007262                           410  
+00007262  C0BC 0000AAAA            411          AND.L #$AAAA,D0     * immediate data word
+00007268                           412  
+00007268  C0BC AAAAEEEE            413          AND.L #$AAAAEEEE,D0 * immediate data longword
+0000726E                           414  
+0000726E                           415  
+0000726E  C390                     416          AND.L D1,(A0)       * dest address register indirect
+00007270                           417  
+00007270  C398                     418          AND.L D1,(A0)+      * dest address register post-increment
+00007272                           419  
+00007272  C3A1                     420          AND.L D1,-(A1)      * dest address register pre-decrement
+00007274                           421  
+00007274  C3B8 4000                422          AND.L D1,$4000      * dest word address
+00007278                           423  
+00007278  C3B8 4000                424          AND.L D1,$00004000  * dest longword address
+0000727C                           425  
+0000727C                           426  
+0000727C                           427  ******************************* ORI ***************************************
+0000727C                           428  *ORI byte
+0000727C                           429  
+0000727C  0000 00EA                430          ORI.B #$EA,D0       * data register
+00007280                           431  
+00007280  0011 00EA                432          ORI.B #$EA,(A1)     * address register indirect
+00007284                           433  
+00007284  0018 00EA                434          ORI.B #$EA,(A0)+    * post-increment
+00007288                           435  
+00007288  0021 00EA                436          ORI.B #$EA,-(A1)    * pre-decrement
+0000728C                           437  
+0000728C  0038 00EA 4000           438          ORI.B #$EA,$4000    * address word
+00007292                           439  
+00007292  0038 00EA 4000           440          ORI.B #$EA,$00004000    * address longword
+00007298                           441  
+00007298                           442  *ORI word
+00007298                           443  
+00007298  0040 EAEA                444          ORI.W #$EAEA,D0     * data register
+0000729C                           445  
+0000729C  0051 EAEA                446          ORI.W #$EAEA,(A1)   * address register indirect
+000072A0                           447  
+000072A0  0058 EAEA                448          ORI.W #$EAEA,(A0)+  * post-increment
+000072A4                           449  
+000072A4  0061 EAEA                450          ORI.W #$EAEA,-(A1)  * pre-decrement
+000072A8                           451  
+000072A8  0078 EAEA 4000           452          ORI.W #$EAEA,$4000  * address word
+000072AE                           453  
+000072AE  0078 EAEA 4000           454          ORI.W #$EAEA,$00004000  * address longword
+000072B4                           455  
+000072B4                           456  *ORI longword
+000072B4                           457  
+000072B4  0080 EAEACCCC            458          ORI.L #$EAEACCCC,D0     * data register
+000072BA                           459  
+000072BA  0091 EAEACCCC            460          ORI.L #$EAEACCCC,(A1)       * address register indirect
+000072C0                           461  
+000072C0  0098 EAEACCCC            462          ORI.L #$EAEACCCC,(A0)+      * post-increment
+000072C6                           463  
+000072C6  00A1 EAEACCCC            464          ORI.L #$EAEACCCC,-(A1)      * pre-decrement
+000072CC                           465  
+000072CC  00B8 EAEACCCC 4000       466          ORI.L #$EAEACCCC,$4000      * address word
+000072D4                           467  
+000072D4  00B8 EAEACCCC 4000       468          ORI.L #$EAEACCCC,$00004000  * address longword
+000072DC                           469  
+000072DC                           470  
+000072DC                           471  ******************************* NOT ***************************************
+000072DC                           472  * NOT byte
+000072DC                           473  
+000072DC  4600                     474          NOT.B D0    * data register
+000072DE                           475  
+000072DE  4610                     476          NOT.B (A0)  * address register indirect
+000072E0                           477  
+000072E0  4618                     478          NOT.B (A0)+ * address register post-increment
+000072E2                           479  
+000072E2  4621                     480          NOT.B -(A1) * address register pre-increment
+000072E4                           481  
+000072E4  4638 4000                482          NOT.B $4000 * address word
+000072E8                           483  
+000072E8  4638 4000                484          NOT.B $00004000 *address longword
+000072EC                           485  
+000072EC                           486  
+000072EC                           487  * NOT word
+000072EC                           488  
+000072EC  4640                     489          NOT.W D0    * data register
+000072EE                           490  
+000072EE  4650                     491          NOT.W (A0)  * address register indirect
+000072F0                           492  
+000072F0  4658                     493          NOT.W (A0)+ * address register post-increment
+000072F2                           494  
+000072F2  4661                     495          NOT.W -(A1) * address register pre-increment
+000072F4                           496  
+000072F4  4678 4000                497          NOT.W $4000 * address word
+000072F8                           498  
+000072F8  4678 4000                499          NOT.W $00004000 *address longword
+000072FC                           500  
+000072FC                           501  
+000072FC                           502  * NOT longword
+000072FC                           503  
+000072FC  4680                     504          NOT.L D0    * data register
+000072FE                           505  
+000072FE  4690                     506          NOT.L (A0)  * address register indirect
+00007300                           507  
+00007300  4698                     508          NOT.L (A0)+ * address register post-increment
+00007302                           509  
+00007302  46A1                     510          NOT.L -(A1) * address register pre-increment
+00007304                           511  
+00007304  46B8 4000                512          NOT.L $4000 * address word
+00007308                           513  
+00007308  46B8 4000                514          NOT.L $00004000 *address longword
+0000730C                           515  
+0000730C                           516  ******************************* ROL ***************************************
+0000730C                           517  *ROL byte
+0000730C                           518  
+0000730C  E139                     519          ROL.B D0,D1
+0000730E                           520      
+0000730E  E318                     521          ROL.B #1,D0
+00007310                           522      
+00007310                           523  *ROL word
+00007310  E179                     524          ROL.W D0,D1
+00007312                           525      
+00007312  E358                     526          ROL.W #1,D0
+00007314                           527  
+00007314                           528  *ROL longword
+00007314  E1B9                     529          ROL.L D0,D1
+00007316                           530      
+00007316  E398                     531          ROL.L #1,D0
+00007318                           532      
+00007318                           533  
+00007318                           534  *ROR byte
+00007318  E039                     535          ROR.B D0,D1
+0000731A                           536      
+0000731A  E218                     537          ROR.B #1,D0
+0000731C                           538      
+0000731C                           539  *ROR word
+0000731C  E079                     540          ROR.W D0,D1
+0000731E                           541      
+0000731E  E258                     542          ROR.W #1,D0
+00007320                           543  
+00007320                           544  *ROR longword
+00007320  E0B9                     545          ROR.L D0,D1
+00007322                           546      
+00007322  E298                     547          ROR.L #1,D0
+00007324                           548  
+00007324                           549   ****************************** Bcc ***************************************
+00007324                           550   
+00007324                           551  LOOP    
+00007324  67FE                     552          BEQ   LOOP
+00007326  66FC                     553          BNE   LOOP
+00007328  6DFA                     554          BLT   LOOP
+0000732A  62F8                     555          BHI   LOOP
+0000732C                           556          
+0000732C                           557  
+0000732C                           558  ***************************************************************************
+0000732C                           559  
+0000732C                           560  *   MOVE.W  #$B6EE,D0
+0000732C  123C 00F2                561      MOVE.B  #$F2,D1
+00007330  143C 0058                562      MOVE.B  #%01011000,D2
+00007334                           563  *   MOVE.W  #$4545,D2
+00007334                           564  *   MOVEA.W #$4000,A0
+00007334                           565          
+00007334                           566          
+00007334                           567  ********** A D D *************** A D D *************** A D D **************
+00007334                           568  
+00007334                           569  ***************************************************************************
+00007334                           570  *ADD - byte size
+00007334                           571      
+00007334  D200                     572          ADD.B   D0,D1
+00007336  D410                     573          ADD.B   (A0),D2
+00007338  D619                     574          ADD.B   (A1)+,D3
+0000733A  D822                     575          ADD.B   -(A2),D4
+0000733C  D439 0000AA12            576          ADD.B   $AA12,D2
+00007342  D639 EF110033            577          ADD.B   $EF110033,D3        
+00007348  DA02                     578          ADD.B   D2,D5
+0000734A  D311                     579          ADD.B   D1,(A1)
+0000734C  D31A                     580          ADD.B   D1,(A2)+
+0000734E  D323                     581          ADD.B   D1,-(A3)
+00007350  D539 000080AA            582          ADD.B   D2,$80AA
+00007356  D139 53642353            583          ADD.B   D0,$53642353
+0000735C                           584  
+0000735C                           585  ***************************************************************************
+0000735C                           586  *ADD - word size
+0000735C                           587  
+0000735C  D642                     588          ADD.W   D2,D3
+0000735E  D0C1                     589          ADD.W   D1,A0
+00007360  D751                     590          ADD.W   D3,(A1)
+00007362  D55A                     591          ADD.W   D2,(A2)+
+00007364  DB63                     592          ADD.W   D5,-(A3)
+00007366  D440                     593          ADD.W   D0,D2
+00007368  D251                     594          ADD.W   (A1),D1
+0000736A  D258                     595          ADD.W   (A0)+,D1
+0000736C  D260                     596          ADD.W   -(A0),D1
+0000736E  D479 0000AA10            597          ADD.W   $AA10,D2
+00007374  D679 EF234033            598          ADD.W   $EF234033,D3
+0000737A                           599          
+0000737A                           600  ***************************************************************************
+0000737A                           601  *ADD - long size         
+0000737A                           602          
+0000737A  D682                     603          ADD.L   D2,D3
+0000737C  D1C1                     604          ADD.L   D1,A0
+0000737E  D391                     605          ADD.L   D1,(A1)
+00007380  D39A                     606          ADD.L   D1,(A2)+
+00007382  D3A3                     607          ADD.L   D1,-(A3)
+00007384  D480                     608          ADD.L   D0,D2
+00007386  D291                     609          ADD.L   (A1),D1
+00007388  D298                     610          ADD.L   (A0)+,D1
+0000738A  D2A0                     611          ADD.L   -(A0),D1
+0000738C  D0B8 00A0                612          ADD.L   $A0,D0
+00007390  D4B9 0000AA10            613          ADD.L   $AA10,D2
+00007396  D6B9 22334455            614          ADD.L   $22334455,D3
+0000739C                           615  
+0000739C                           616  
+0000739C                           617  ********** A D D A ************* A D D A ************** A D D A ***********
+0000739C                           618  
+0000739C                           619  *****************************
+0000739C                           620  *ADDA - word size 
+0000739C                           621  
+0000739C  D2C8                     622          ADDA.W   A0,A1
+0000739E  D0C1                     623          ADDA.W   D1,A0
+000073A0  D4D1                     624          ADDA.W   (A1),A2
+000073A2  D4DA                     625          ADDA.W   (A2)+,A2
+000073A4  D4E3                     626          ADDA.W   -(A3),A2
+000073A6  D4F9 0000AA10            627          ADDA.W   $AA10,A2
+000073AC  D0F9 AABB1033            628          ADDA.W   $AABB1033,A0
+000073B2  D6FC 0032                629          ADDA.W   #50,A3
+000073B6  D8FC 00A1                630          ADDA.W   #$A1,A4
+000073BA  D8FC A010                631          ADDA.W   #$A010,A4
+000073BE                           632          
+000073BE                           633  *****************************
+000073BE                           634  *ADDA - long size 
+000073BE                           635          
+000073BE  D3C8                     636          ADDA.L   A0,A1
+000073C0  D1C1                     637          ADDA.L   D1,A0
+000073C2  D5D1                     638          ADDA.L   (A1),A2
+000073C4  D5DA                     639          ADDA.L   (A2)+,A2
+000073C6  D5E3                     640          ADDA.L   -(A3),A2
+000073C8  D5F9 0000AA10            641          ADDA.L   $AA10,A2
+000073CE  D1F9 AABB1033            642          ADDA.L   $AABB1033,A0
+000073D4  D7FC 00000032            643          ADDA.L   #50,A3
+000073DA  D9FC 000000A1            644          ADDA.L   #$A1,A4
+000073E0  D9FC 0000A010            645          ADDA.L   #$A010,A4
+000073E6  D9FC A0104500            646          ADDA.L   #$A0104500,A4    
+000073EC                           647          
+000073EC                           648          
+000073EC                           649  ********** A D D Q ************* A D D Q ************* A D D Q ************
+000073EC                           650  
+000073EC                           651  *****************************
+000073EC                           652  *ADDQ - byte size
+000073EC                           653  
+000073EC  5200                     654          ADDQ.B  #1,D0
+000073EE  5201                     655          ADDQ.B  #1,D1
+000073F0  5200                     656          ADDQ.B  #1,D0
+000073F2  5401                     657          ADDQ.B  #2,D1
+000073F4  5200                     658          ADDQ.B  #$1,D0
+000073F6  5E01                     659          ADDQ.B  #$7,D1
+000073F8  5611                     660          ADDQ.B  #3,(A1)
+000073FA  5A1A                     661          ADDQ.B  #5,(A2)+
+000073FC  5A22                     662          ADDQ.B  #%101,-(A2)
+000073FE  5638 1234                663          ADDQ.B  #3,$1234
+00007402  5E39 ABCD1534            664          ADDQ.B  #7,$ABCD1534
+00007408                           665       
+00007408                           666  *****************************
+00007408                           667  *ADDQ - word size
+00007408                           668  
+00007408  5A40                     669          ADDQ.W  #5,D0
+0000740A  5241                     670          ADDQ.W  #$1,D1
+0000740C  5040                     671          ADDQ.W  #$8,D0
+0000740E  5249                     672          ADDQ.W  #$1,A1
+00007410  5C51                     673          ADDQ.W  #%0110,(A1)
+00007412  5A5A                     674          ADDQ.W  #5,(A2)+
+00007414  5A62                     675          ADDQ.W  #%101,-(A2)
+00007416  5678 1234                676          ADDQ.W  #3,$1234
+0000741A  5E79 ABCD1534            677          ADDQ.W  #7,$ABCD1534
+00007420                           678  
+00007420                           679  
+00007420                           680  *****************************
+00007420                           681  *ADDQ - long size
+00007420                           682  
+00007420  5A80                     683          ADDQ.L  #5,D0
+00007422  5281                     684          ADDQ.L  #$1,D1
+00007424  5080                     685          ADDQ.L  #$8,D0
+00007426  5289                     686          ADDQ.L  #$1,A1
+00007428  5C91                     687          ADDQ.L  #%0110,(A1)
+0000742A  5A9A                     688          ADDQ.L  #5,(A2)+
+0000742C  5AA2                     689          ADDQ.L  #%101,-(A2)
+0000742E  56B8 1234                690          ADDQ.L  #3,$1234
+00007432  5EB9 ABCD1534            691          ADDQ.L  #7,$ABCD1534
+00007438                           692          
+00007438                           693  
+00007438                           694  ********** A S L *************** A S L *************** A S L **************
+00007438                           695  
+00007438                           696  *****************************
+00007438                           697  *ASL
+00007438                           698  
+00007438  E765                     699          ASL     D3,D5
+0000743A  EB40                     700          ASL     #5,D0
+0000743C  ED41                     701          ASL     #6,D1
+0000743E  EB41                     702          ASL     #%101,D1
+00007440  E1D0                     703          ASL     (A0)
+00007442  E1D9                     704          ASL     (A1)+
+00007444  E1E1                     705          ASL     -(A1)
+00007446  E1F8 1000                706          ASL     $1000
+0000744A  E1F9 AABBCCDD            707          ASL     $AABBCCDD
+00007450                           708  
+00007450                           709  *****************************
+00007450                           710  *ASL - word size
+00007450                           711  
+00007450  E161                     712          ASL.W   D0,D1
+00007452  E740                     713          ASL.W   #3,D0
+00007454  EF41                     714          ASL.W   #7,D1
+00007456  EB41                     715          ASL.W   #%101,D1
+00007458  E1D0                     716          ASL.W   (A0)
+0000745A  E1DB                     717          ASL.W   (A3)+
+0000745C  E1E5                     718          ASL.W   -(A5)
+0000745E  E1F9 0000A432            719          ASL.W   $A432
+00007464  E1F9 12345678            720          ASL.W   $12345678
+0000746A                           721  
+0000746A                           722  *****************************
+0000746A                           723  *ASL - long size
+0000746A                           724          
+0000746A  E3A2                     725          ASL.L   D1,D2
+0000746C  E780                     726          ASL.L   #3,D0
+0000746E  E380                     727          ASL.L   #$1,D0
+00007470  EB82                     728          ASL.L   #%101,D2
+00007472                           729          
+00007472                           730          
+00007472                           731  ********** A S R *************** A S R *************** A S R **************
+00007472                           732  
+00007472                           733  *****************************
+00007472                           734  *ASR
+00007472                           735  
+00007472  E061                     736          ASR     D0,D1
+00007474  EA41                     737          ASR     #5,D1
+00007476  EA41                     738          ASR     #$5,D1
+00007478  EA41                     739          ASR     #%101,D1
+0000747A  E0D0                     740          ASR     (A0)
+0000747C  E0D8                     741          ASR     (A0)+
+0000747E  E0E0                     742          ASR     -(A0)
+00007480  E0F9 0000A000            743          ASR     $A000
+00007486  E0F9 1234FEDC            744          ASR     $1234FEDC
+0000748C                           745          
+0000748C                           746  *****************************
+0000748C                           747  *ASR - byte size
+0000748C                           748  
+0000748C  E022                     749          ASR.B   D0,D2
+0000748E  EA01                     750          ASR.B   #5,D1
+00007490  E203                     751          ASR.B   #%1,D3
+00007492  EA01                     752          ASR.B   #%101,D1
+00007494                           753  
+00007494                           754  *****************************
+00007494                           755  *ASR - word size
+00007494                           756          
+00007494  E061                     757          ASR.W   D0,D1
+00007496  E640                     758          ASR.W   #3,D0
+00007498  EA41                     759          ASR.W   #$5,D1
+0000749A  EA41                     760          ASR.W   #%101,D1
+0000749C  E0D0                     761          ASR.W   (A0)
+0000749E  E0D8                     762          ASR.W   (A0)+
+000074A0  E0E0                     763          ASR.W   -(A0)
+000074A2  E0F9 0000AEFE            764          ASR.W   $AEFE
+000074A8  E0F9 32243223            765          ASR.W   $32243223
+000074AE                           766          
+000074AE                           767  *****************************
+000074AE                           768  *ASR - long size
+000074AE                           769  
+000074AE  E0A1                     770          ASR.L   D0,D1
+000074B0  E280                     771          ASR.L   #1,D0
+000074B2  E481                     772          ASR.L   #$2,D1
+000074B4  E682                     773          ASR.L   #3,D2
+000074B6                           774          
+000074B6                           775          
+000074B6                           776  ********** C M P *************** C M P *************** C M P **************
+000074B6                           777  
+000074B6                           778  *****************************
+000074B6                           779  *CMP 
+000074B6                           780  
+000074B6  B240                     781   CMP     D0,D1
+000074B8  B648                     782          CMP     A0,D3
+000074BA  B851                     783          CMP     (A1),D4
+000074BC  B45A                     784          CMP     (A2)+,D2
+000074BE  B263                     785          CMP     -(A3),D1
+000074C0  B078 4251                786          CMP     $4251,D0
+000074C4  B279 AABBCCDD            787          CMP     $AABBCCDD,D1
+000074CA  B47C 0005                788          CMP     #5,D2
+000074CE  B27C 0005                789          CMP     #$5,D1
+000074D2  B27C 0005                790          CMP     #%101,D1
+000074D6                           791  
+000074D6                           792  *****************************
+000074D6                           793  *CMP - byte size
+000074D6                           794          
+000074D6  B400                     795          CMP.B   D0,D2
+000074D8  B210                     796          CMP.B   (A0),D1
+000074DA  B419                     797          CMP.B   (A1)+,D2
+000074DC  BA24                     798          CMP.B   -(A4),D5
+000074DE  B238 4321                799          CMP.B   $4321,D1
+000074E2  B239 ACBDFE12            800          CMP.B   $ACBDFE12,D1
+000074E8  B23C 0005                801          CMP.B   #5,D1
+000074EC  B23C 0005                802          CMP.B   #$5,D1
+000074F0  B23C 0005                803          CMP.B   #%101,D1
+000074F4                           804          
+000074F4                           805  *****************************
+000074F4                           806  *CMP - word size        
+000074F4                           807          
+000074F4  B240                     808          CMP.W   D0,D1
+000074F6  B248                     809          CMP.W   A0,D1
+000074F8  B250                     810          CMP.W   (A0),D1
+000074FA  B259                     811          CMP.W   (A1)+,D1
+000074FC  B262                     812          CMP.W   -(A2),D1
+000074FE  B278 423A                813          CMP.W   $423A,D1
+00007502  B279 AABBCCDD            814          CMP.W   $AABBCCDD,D1
+00007508  B27C 0D0E                815          CMP.W   #3342,D1
+0000750C  B27C 2342                816          CMP.W   #$2342,D1
+00007510  B27C 000A                817          CMP.W   #$A,D1
+00007514                           818          
+00007514                           819  *****************************
+00007514                           820  *CMP - long size        
+00007514                           821  
+00007514  B280                     822          CMP.L   D0,D1
+00007516  B488                     823          CMP.L   A0,D2
+00007518  B691                     824          CMP.L   (A1),D3
+0000751A  B89A                     825          CMP.L   (A2)+,D4
+0000751C  B2A0                     826          CMP.L   -(A0),D1
+0000751E  B4B8 007A                827          CMP.L   $007A,D2
+00007522  B6B9 CCDD3647            828          CMP.L   $CCDD3647,D3
+00007528  B8BC 00000005            829          CMP.L   #5,D4
+0000752E  BABC 00000005            830          CMP.L   #$5,D5
+00007534  B2BC 00000005            831          CMP.L   #%101,D1
+0000753A                           832          
+0000753A                           833  
+0000753A                           834  ********* C M P I ************* C M P I ************* C M P I *************
+0000753A                           835  
+0000753A                           836  *****************************
+0000753A                           837  *CMPI
+0000753A                           838  
+0000753A  0C41 000E                839          CMPI    #$E,D1
+0000753E  0C50 000D                840          CMPI    #$D,(A0)
+00007542  0C58 000F                841          CMPI    #$F,(A0)+
+00007546  0C60 0017                842          CMPI    #23,-(A0)
+0000754A  0C79 0001 0000A000       843          CMPI    #1,$A000
+00007552  0C79 0020 AC34AE2D       844          CMPI    #32,$AC34AE2D
+0000755A                           845          
+0000755A                           846  *****************************
+0000755A                           847  *CMPI - byte size
+0000755A                           848  
+0000755A  0C00 0046                849          CMPI.B  #$46,D0
+0000755E  0C10 0002                850          CMPI.B  #$2,(A0)
+00007562  0C18 0016                851          CMPI.B  #22,(A0)+
+00007566  0C20 000E                852          CMPI.B  #14,-(A0)
+0000756A  0C39 0003 0000A000       853          CMPI.B  #3,$A000
+00007572  0C39 0006 11223344       854          CMPI.B  #6,$11223344
+0000757A                           855          
+0000757A                           856  *****************************
+0000757A                           857  *CMPI - word size 
+0000757A                           858         
+0000757A  0C40 0001                859          CMPI.W  #1,D0
+0000757E  0C50 0022                860          CMPI.W  #34,(A0)
+00007582  0C58 001A                861          CMPI.W  #$1A,(A0)+
+00007586  0C60 00BD                862          CMPI.W  #$BD,-(A0)
+0000758A  0C79 0012 0000A000       863          CMPI.W  #$12,$A000
+00007592  0C79 04D2 AABBCCDD       864          CMPI.W  #1234,$AABBCCDD
+0000759A                           865          
+0000759A                           866  *****************************
+0000759A                           867  *CMPI - long size        
+0000759A                           868          
+0000759A  0C80 00000005            869          CMPI.L  #5,D0
+000075A0  0C90 00000D0F            870          CMPI.L  #3343,(A0)
+000075A6  0C98 00AF33DE            871          CMPI.L  #$AF33DE,(A0)+
+000075AC  0CA0 00000015            872          CMPI.L  #$15,-(A0)
+000075B2  0CB9 00000005 2345DEEF   873          CMPI.L  #%101,$2345DEEF
+000075BC  0CB9 00000022 AABBCCDD   874          CMPI.L  #34,$AABBCCDD
+000075C6                           875  
+000075C6                           876  
+000075C6                           877  ********** E O R *************** E O R *************** E O R **************
+000075C6                           878  
+000075C6                           879  *****************************
+000075C6                           880  *EOR - byte size
+000075C6                           881  
+000075C6  B300                     882          EOR.B    D1,D0
+000075C8  BD10                     883          EOR.B    D6,(A0)
+000075CA  B319                     884          EOR.B    D1,(A1)+
+000075CC  B921                     885          EOR.B    D4,-(A1)
+000075CE  B338 000A                886          EOR.B    D1,$A
+000075D2  BD38 00CB                887          EOR.B    D6,$CB
+000075D6  B338 1181                888          EOR.B    D1,$1181
+000075DA  B939 AFE51433            889          EOR.B    D4,$AFE51433
+000075E0                           890  
+000075E0                           891  *****************************
+000075E0                           892  *EOR - word size
+000075E0                           893  
+000075E0  B340                     894          EOR.W    D1,D0
+000075E2  B150                     895          EOR.W    D0,(A0)
+000075E4  B359                     896          EOR.W    D1,(A1)+
+000075E6  B161                     897          EOR.W    D0,-(A1)
+000075E8  B378 0987                898          EOR.W    D1,$0987
+000075EC  B178 00FE                899          EOR.W    D0,$FE
+000075F0  B379 0000BE35            900          EOR.W    D1,$BE35
+000075F6  B179 ABCD1234            901          EOR.W    D0,$ABCD1234
+000075FC                           902  
+000075FC                           903  *****************************
+000075FC                           904  *EOR - long size
+000075FC                           905  
+000075FC  B380                     906          EOR.L    D1,D0
+000075FE  BB91                     907          EOR.L    D5,(A1)
+00007600  B59B                     908          EOR.L    D2,(A3)+
+00007602  B7A5                     909          EOR.L    D3,-(A5)
+00007604  B3B8 1324                910          EOR.L    D1,$1324
+00007608  B3B9 0000DF78            911          EOR.L    D1,$DF78
+0000760E  B5B9 73411234            912          EOR.L    D2,$73411234
+00007614  B3B9 ACDC5636            913          EOR.L    D1,$ACDC5636
+0000761A                           914     
+0000761A                           915  
+0000761A                           916  ********** L E A *************** L E A *************** L E A **************
+0000761A                           917  
+0000761A                           918  *****************************
+0000761A                           919  *LEA
+0000761A                           920  
+0000761A  47F8 0033                921      LEA     $33,A3
+0000761E  49F9 0000C2D3            922      LEA     $C2D3,A4
+00007624  45F8 00A2                923      LEA     $A2,A2
+00007628  47D0                     924      LEA     (A0),A3
+0000762A  47D2                     925      LEA     (A2),A3
+0000762C  43F8 0002                926      LEA     $2,A1
+00007630  43F9 0000AA12            927      LEA     $AA12,A1
+00007636  45F8 0014                928      LEA     $14,A2
+0000763A  41F9 00ACBD12            929      LEA     $ACBD12,A0
+00007640  47F9 0000ABC1            930      LEA     $ABC1,A3
+00007646  41F8 00EF                931      LEA     $EF, A0
+0000764A                           932  
+0000764A                           933  ******************************** MOVEM *************************************
+0000764A                           934  
+0000764A  48E1 F800                935          MOVEM.L D0-D4,-(A1)
+0000764E  48B8 001F 4000           936          MOVEM.W D0-D4,$4000
+00007654  48F8 3F00 4000           937          MOVEM.L A0-A5,$4000
+0000765A  48D2 1020                938          MOVEM.L A4/D5,(A2)
+0000765E  4CD6 1F7E                939          MOVEM.L (A6),D1-D6/A0-A4
+00007662  4CB8 4906 4001           940          MOVEM.W $4001,A0/A3/A6/D1/D2
+00007668  4CDC A289                941          MOVEM.L (A4)+,D0/D3/D7/A1/A5/A7
+0000766C                           942  
+0000766C                           943   ****************************** END ***************************************
+0000766C                           944  
+0000766C                           945  *Stop here. The next instruction shows how a label is used
+0000766C                           946  
+0000766C                           947  
+0000766C                           948          END   START           
+
+No errors detected
+8 warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+ADDR1               4000
+ADDR2               4001
+DATA1               C0
+DATA2               A7FF
+DATA3               5555
+DATA4               0
+DATA5               1246
+DATA6               4F
+DATA7               17
+LOOP                7324
+START               7000
